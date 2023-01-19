@@ -65,31 +65,31 @@ Purpur'un alternatif keepalive sistemini etkinleştirebilirsiniz, böylece köt�
 
 #### simulation-distance
 
-`Good starting value: 4`
+`İyi Başlangıç Değeri: 4`
 
-Simulation distance is distance in chunks around the player that the server will tick. Essentially the distance from the player that things will happen. This includes furnaces smelting, crops and saplings growing, etc. This is an option you want to purposefully set low, somewhere around `3` or `4`, because of the existence of `view-distance`. This allows to load more chunks without ticking them. This effectively allows players to see further without the same performance impact.
+Simülasyon mesafesi, sunucunun işaretleyeceği oyuncunun etrafındaki chunklar halinde mesafedir. Esasen oyuncudan olayların gerçekleşeceği mesafedir. Buna fırınların eritilmesi, ekinlerin ve fidanların büyümesi vb. dahildir. Bu, `görüş mesafesi`nin varlığı nedeniyle `3` veya `4` civarında bir yerde kasıtlı olarak düşük ayarlamak istediğiniz bir seçenektir. Bu, daha fazla chunk'ın işaretlenmeden yüklenmesini sağlar. Bu, oyuncuların aynı performans etkisi olmadan daha uzağı görmelerini sağlar.
 
 #### view-distance
 
-`Good starting value: 7`
+`İyi Başlangıç Değeri: 7`
 
-This is the distance in chunks that will be sent to players, similar to no-tick-view-distance from paper.
+Bu, oyunculara gönderilecek olan chunklar'daki mesafedir, paper'daki to no-tick-view-distance'a benzer.
 
-The total view distance will be equal to the greatest value between `simulation-distance` and `view-distance`. For example, if the simulation distance is set to 4, and the view distance is 12, the total distance sent to the client will be 12 chunks.
+Toplam görünüm mesafesi `simulation-distance` ile `view-distance` arasındaki en büyük değere eşit olacaktır. Örneğin, simulation-distance 4 olarak ayarlanmışsa ve view-distance 12 ise, istemciye gönderilen toplam mesafe 12 chunk olacaktır.
 
 ### [spigot.yml]
 
 #### view-distance
 
-`Good starting value: default`
+`İyi Başlangıç Değeri: default`
 
-This value overwrites server.properties one if not set to `default`. You should keep it default to have both simulation and view distance in one place for easier management.
+Bu değer, `default` olarak ayarlanmamışsa server.properties değerinin üzerine yazar. Daha kolay yönetim için hem simülasyon hem de görüş mesafesi tek bir yerde olması için default olarak tutmalısınız.
 
 ### [paper-world configuration]
 
 #### delay-chunk-unloads-by
 
-`Good starting value: 10s`
+`İyi Başlangıç Değeri: 10s`
 
 This option allows you to configure how long chunks will stay loaded after a player leaves. This helps to not constantly load and unload the same chunks when a player moves back and forth. Too high values can result in way too many chunks being loaded at once. In areas that are frequently teleported to and loaded, consider keeping the area permanently loaded. This will be lighter for your server than constantly loading and unloading chunks.
 
