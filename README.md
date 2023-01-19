@@ -42,24 +42,24 @@ Dünya, nether ve end'in her dünya için ayarlanması gereken ayrı dünya sın
 
 #### network-compression-threshold
 
-`Good starting value: 256`
+`İyi Başlangıç Değeri: 256`
 
-This allows you to set the cap for the size of a packet before the server attempts to compress it. Setting it higher can save some CPU resources at the cost of bandwidth, and setting it to -1 disables it. Setting this higher may also hurt clients with slower network connections. If your server is in a network with a proxy or on the same machine (with less than 2 ms ping), disabling this (-1) will be beneficial, since internal network speeds can usually handle the additional uncompressed traffic.
+Bu, sunucu sıkıştırmaya çalışmadan önce bir paketin boyutu için üst sınırı ayarlamanıza olanak tanır. Daha yüksek ayarlamak, bant genişliği pahasına bazı CPU kaynaklarından tasarruf sağlayabilir ve -1 olarak ayarlamak bunu devre dışı bırakır. Bunu daha yükseğe ayarlamak, daha yavaş ağ bağlantıları olan istemcilere de zarar verebilir. Sunucunuz proxy'li bir ağdaysa veya aynı makinedeyse (2 ms'den az ping ile), dahili ağ hızları genellikle ek sıkıştırılmamış trafiği kaldırabileceğinden, bunu devre dışı bırakmak (-1) faydalı olacaktır.
 
 ### [purpur.yml]
 
 #### use-alternate-keepalive
 
-`Good starting value: true`
+`İyi Başlangıç Değeri: true`
 
-You can enable Purpur's alternate keepalive system so players with bad connection don't get timed out as often. Has known incompatibility with TCPShield.
+Purpur'un alternatif keepalive sistemini etkinleştirebilirsiniz, böylece kötü bağlantıya sahip oyuncular sık sık zaman aşımına uğramaz. TCPShield ile uyumsuzluk olabilir.
 
-> Enabling this sends a keepalive packet once per second to a player, and only kicks for timeout if none of them were responded to in 30 seconds. Responding to any of them in any order will keep the player connected. AKA, it won't kick your players because 1 packet gets dropped somewhere along the lines  
+> Bunu etkinleştirmek, bir oyuncuya saniyede bir kez bir keepalive paketi gönderir ve yalnızca 30 saniye içinde hiçbirine yanıt verilmezse zaman aşımına uğrar. Herhangi bir sırayla herhangi birine yanıt vermek oyuncuyu bağlı tutacaktır.  
 ~ https://purpurmc.org/docs/Configuration/#use-alternate-keepalive
 
 ---
 
-## Chunks
+## Chunklar
 
 ### [server.properties]
 
