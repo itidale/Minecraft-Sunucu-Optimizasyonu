@@ -1,44 +1,42 @@
-# Minecraft server optimization guide
+# Minecraft sunucuları için sunucu optimizasyonu
 
-Note for users that are on vanilla, Fabric or Spigot (or anything below Paper) - go to your server.properties and change `sync-chunk-writes` to `false`. This option is forcibly set to false on Paper and its forks, but on other server implementations you need to switch this to false manually. This allows the server to save chunks off the main thread, lessening the load on the main tick loop.
+Vanilla, Fabric veya Spigot (veya Paper'ın altındaki herhangi bir şey) kullanan kullanıcılar için not - server.properties adresine gidin ve 'sync-chunk-writes' öğesini 'false' olarak değiştirin. Bu seçenek Paper ve forklarında zorla false olarak ayarlanır, ancak diğer sunucu uygulamalarında bunu manuel olarak false olarak değiştirmeniz gerekir. Bu, sunucunun ana iş parçacığından parçalar kaydetmesine olanak tanıyarak ana onay işareti döngüsündeki yükü azaltır.
 
-Guide for version 1.19. Some things may still apply to 1.15 - 1.18.
+Bu klavuz 1.19 sürümü içindir. Bazı şeyler hala 1.15 - 1.18 için geçerli olabilir.
 
 Based on [this guide](https://www.spigotmc.org/threads/guide-server-optimization%E2%9A%A1.283181/) and other sources (all of them are linked throughout the guide when relevant).
 
-Use the table of contents located above (next to `README.md`) to easily navigate throughout this guide.
+# Giriş
+Size mükemmel sonuçlar verecek bir rehber asla olmayacaktır. Her sunucunun kendi ihtiyaçları ve ne kadar fedakarlık yapabileceğiniz veya yapmak istediğiniz konusunda sınırları vardır. Sunucunuzun ihtiyaçlarına göre ince ayar yapmak için seçenekleri kurcalamak her şeydir. Bu kılavuz sadece hangi seçeneklerin performans üzerinde etkisi olduğunu ve tam olarak neyi değiştirdiklerini anlamanıza yardımcı olmayı amaçlamaktadır. Bu kılavuzda yanlış bilgi bulduğunuzu düşünüyorsanız, düzeltmek için bir sorun açabilir veya pull request oluşturabilirsiniz.
 
-# Intro
-There will never be a guide that will give you perfect results. Each server has their own needs and limits on how much you can or are willing to sacrifice. Tinkering around with the options to fine tune them to your servers needs is what it's all about. This guide only aims to help you understand what options have impact on performance and what exactly they change. If you think you found inaccurate information within this guide, you're free to open an issue or set up a pull request to correct it.
+# Hazırlıklar
 
-# Preparations
+## Sunucu Dosyası (JAR)
+Sunucu yazılımı seçiminiz performans ve API olanaklarında büyük bir fark yaratabilir. Şu anda birden fazla uygulanabilir popüler sunucu JAR'ı var, ancak çeşitli nedenlerle uzak durmanız gereken birkaç tane de var.
 
-## Server JAR
-Your choice of server software can make a huge difference in performance and API possibilities. There are currently multiple viable popular server JARs, but there are also a few that you should stay away from for various reasons.
+Önerilen en iyi seçimler:
+* [Paper](https://github.com/PaperMC/Paper) - Oynanış ve mekanik tutarsızlıkları düzeltirken performansı artırmayı amaçlayan en popüler sunucu yazılımı.
+* [Pufferfish](https://github.com/pufferfish-gg/Pufferfish) - Sunucu performansını daha da iyileştirmeyi amaçlayan Paper forku.
+* [Purpur](https://github.com/PurpurMC/Purpur) - Pufferfish forkudur, özelliklere ve özelleştirme özgürlüğüne odaklanmıştır.
 
-Recommended top picks:
-* [Paper](https://github.com/PaperMC/Paper) - The most popular server software that aims to improve performance while fixing gameplay and mechanics inconsistencies.
-* [Pufferfish](https://github.com/pufferfish-gg/Pufferfish) - Paper fork that aims to further improve server performance.
-* [Purpur](https://github.com/PurpurMC/Purpur) - Pufferfish fork focused on features and the freedom of customization.
+Uzak durman gerekenler:
+* Async olduğunu iddia eden herhangi bir ücretli sunucu JAR'ı - %99,99 olasılıkla dolandırıcıdır.
+* Bukkit/CraftBukkit/Spigot - Erişebileceğiniz diğer sunucu yazılımlarına kıyasla performans açısından son derece eski.
+* Sunucu aktif iken eklentileri kapatıp / açmaya yarayan eklentiler. Anlamak için [buraya](#plugins-enablingdisabling-other-plugins) bakın.
+* Pufferfish veya Purpur'dan daha aşağıya doğru birçok fork, istikrarsızlık ve diğer sorunlarla karşılaşacaktır. Daha fazla performans artışı arıyorsanız, sunucunuzu optimize edin veya kişisel bir özel forka yatırım yapın.
 
-You should stay away from:
-* Any paid server JAR that claims async anything - 99.99% chance of being a scam.
-* Bukkit/CraftBukkit/Spigot - Extremely outdated in terms of performance compared to other server software you have access to.
-* Any plugin/software that enables/disables/reloads plugins on runtime. See [this section](#plugins-enablingdisabling-other-plugins) to understand why.
-* Many forks further downstream from Pufferfish or Purpur will encounter instability and other issues. If you're seeking more performance gains, optimize your server or invest in a personal private fork.
+## Haritayı önceden yükleme
+Haritayı önceden yükleme, yıllar içinde yığın üretimine eklenen çeşitli optimizasyonlar sayesinde artık yalnızca korkunç, tek iş parçacıklı veya sınırlı CPU'lara sahip sunucularda kullanışlıdır. Yine de, ön üretim genellikle Pl3xMap veya Dynmap gibi dünya haritası eklentileri için parçalar oluşturmak için kullanılır.
 
-## Map pregen
-Map pregeneration, thanks to various optimizations to chunk generation added over the years is now only useful on servers with terrible, single threaded, or limited CPUs. Though, pregeneration is commonly used to generate chunks for world-map plugins such as Pl3xMap or Dynmap.
+Eğer hala dünyayı önceden oluşturmak istiyorsanız, bunu yapmak için [Chunky](https://github.com/pop4959/Chunky) gibi bir eklenti kullanabilirsiniz. Oyuncularınızın yeni parçalar oluşturmaması için bir dünya sınırı ayarladığınızdan emin olun! Önceden yükleme eklentisinde ayarladığınız yarıçapa bağlı olarak öngenlemenin bazen saatler sürebileceğini unutmayın. Paper ve üstü ile tps'nizin yığın yüklemesinden etkilenmeyeceğini, ancak sunucunuzun cpu'su aşırı yüklendiğinde yığın yükleme hızının önemli ölçüde yavaşlayabileceğini unutmayın.
 
-If you still want to pregen the world, you can use a plugin such as [Chunky](https://github.com/pop4959/Chunky) to do it. Make sure to set up a world border so your players don't generate new chunks! Note that pregenning can sometimes take hours depending on the radius you set in the pregen plugin. Keep in mind that with Paper and above your tps will not be affected by chunk loading, but the speed of loading chunks can significantly slow down when your server's cpu is overloaded.
+Dünya, nether ve end'in her dünya için ayarlanması gereken ayrı dünya sınırlarına sahip olduğunu unutmamak önemlidir. Nether boyutu overworld'den 8 kat daha küçüktür (eğer bir veri paketi ile değiştirilmemişse), bu nedenle boyutu yanlış ayarlarsanız oyuncularınız dünya sınırının dışına çıkabilir!
 
-It's key to remember that the overworld, nether and the end have separate world borders that need to be set up for each world. The nether dimension is 8x smaller than the overworld (if not modified with a datapack), so if you set the size wrong your players might end up outside of the world border!
+**Vanilya dünya sınırı (`/worldborder set [opsiyon]`) ayarladığınızdan emin olun, çünkü gecikme artışlarına neden olabilecek hazine haritaları için arama aralığı gibi belirli işlevleri sınırlar.**
 
-**Make sure to set up a vanilla world border (`/worldborder set [diameter]`), as it limits certain functionalities such as lookup range for treasure maps that can cause lag spikes.**
+# Konfigürasyonlar
 
-# Configurations
-
-## Networking
+## Ağ İletişimi
 
 ### [server.properties]
 
