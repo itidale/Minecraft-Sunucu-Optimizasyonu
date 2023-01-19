@@ -4,7 +4,7 @@ Vanilla, Fabric veya Spigot (veya Paper'ın altındaki herhangi bir şey) kullan
 
 Bu klavuz 1.19 sürümü içindir. Bazı şeyler hala 1.15 - 1.18 için geçerli olabilir.
 
-Based on [this guide](https://www.spigotmc.org/threads/guide-server-optimization%E2%9A%A1.283181/) and other sources (all of them are linked throughout the guide when relevant).
+[Bu klavuz](https://www.spigotmc.org/threads/guide-server-optimization%E2%9A%A1.283181/) ve diğer kaynaklara dayanmaktadır (alıntı olduğunda kılavuz boyunca bağlantı verilmiştir).
 
 # Giriş
 Size mükemmel sonuçlar verecek bir rehber asla olmayacaktır. Her sunucunun kendi ihtiyaçları ve ne kadar fedakarlık yapabileceğiniz veya yapmak istediğiniz konusunda sınırları vardır. Sunucunuzun ihtiyaçlarına göre ince ayar yapmak için seçenekleri kurcalamak her şeydir. Bu kılavuz sadece hangi seçeneklerin performans üzerinde etkisi olduğunu ve tam olarak neyi değiştirdiklerini anlamanıza yardımcı olmayı amaçlamaktadır. Bu kılavuzda yanlış bilgi bulduğunuzu düşünüyorsanız, düzeltmek için bir sorun açabilir veya pull request oluşturabilirsiniz.
