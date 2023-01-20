@@ -91,17 +91,17 @@ Bu değer, `default` olarak ayarlanmamışsa server.properties değerinin üzeri
 
 `İyi Başlangıç Değeri: 10s`
 
-This option allows you to configure how long chunks will stay loaded after a player leaves. This helps to not constantly load and unload the same chunks when a player moves back and forth. Too high values can result in way too many chunks being loaded at once. In areas that are frequently teleported to and loaded, consider keeping the area permanently loaded. This will be lighter for your server than constantly loading and unloading chunks.
+Bu seçenek, bir oyuncu ayrıldıktan sonra chunkların ne kadar süreyle yüklü kalacağını yapılandırmanıza olanak tanır. Bu, bir oyuncu ileri geri hareket ettiğinde aynı chunkları sürekli olarak yüklememeye ve boşaltmamaya yardımcı olur. Çok yüksek değerler aynı anda çok fazla chunkın yüklenmesine neden olabilir. Sık sık ışınlanılan ve yüklenen alanlarda, alanı kalıcı olarak yüklü tutmayı düşünün. Bu, sunucunuz için sürekli olarak chunkları yüklemek ve boşaltmaktan daha hafif olacaktır.
 
 #### max-auto-save-chunks-per-tick
 
-`Good starting value: 8`
+`İyi Baṣlangıç Değeri: 8`
 
-Lets you slow down incremental world saving by spreading the task over time even more for better average performance. You might want to set this higher than `8` with more than 20-30 players. If incremental save can't finish in time then bukkit will automatically save leftover chunks at once and begin the process again.
+Daha iyi ortalama performans için görevi zamana daha da yayarak artan dünya tasarrufunu yavaşlatmanızı sağlar. Bunu 20-30'dan fazla oyuncu ile `8`den daha yükseğe ayarlamak isteyebilirsiniz. Artımlı kaydetme işlemi zamanında tamamlanamazsa, bukkit kalan chunkları otomatik olarak bir kerede kaydedecek ve işleme yeniden başlayacaktır.
 
 #### prevent-moving-into-unloaded-chunks
 
-`Good starting value: true`
+`İyi Baṣlangıç Değeri: true`
 
 When enabled, prevents players from moving into unloaded chunks and causing sync loads that bog down the main thread causing lag. The probability of a player stumbling into an unloaded chunk is higher the lower your view-distance is.
 
